@@ -15,12 +15,12 @@ ignoring the first command in the instructions below.
 
 If these requirements are met, open your command line and perform the following commands:
 #### Windows cmd / Powershell
-    git clone https://github.com/alex-loopes/deployWatcher.git
+    git clone https://github.com/akelopes/deployWatcher.git
     cd deployWatcher
     flask run
     
 #### Linux shell
-    git clone https://github.com/alex-loopes/deployWatcher.git
+    git clone https://github.com/akelopes/deployWatcher.git
     cd deployWatcher
     flask run
 
@@ -36,7 +36,7 @@ ignoring the first command in the instructions below.
 With these requirements installed and functional on your computer, simply open a command prompt and run the following
 commands:
 
-    git clone https://github.com/aloopes/deployWatcher.git
+    git clone https://github.com/akelopes/deployWatcher.git
     cd deployWatcher
     docker build. -t deploywatcher
     docker run -d -p 5000:5000 deploywatcher
@@ -58,7 +58,7 @@ ignoring the first command in the instructions below.
 Having these requirements installed, open a command prompt for your operating system and run the following commands:
 NOTE: replace the `docker-compose` commands with `docker stack deploy --compose-file docker-compose.yml`
 
-    git clone https://github.com/aloopes/deployWatcher.git
+    git clone https://github.com/akelopes/deployWatcher.git
     cd deployWatcher/prod_simulation
     docker-compose build
     docker-compose up
@@ -85,7 +85,7 @@ Example of a post command using the curl tool:
 
     curl --header "Content-Type: application / json" \
       --request POST \
-      --data '{"component": "testApp", "version": 1.0, "author": "alex-loopes", "status": "started", "sent_timestamp": "2020-01-01 10: 10: 50.555 "} '\
+      --data '{"component": "testApp", "version": 1.0, "author": "akelopes", "status": "started", "sent_timestamp": "2020-01-01 10: 10: 50.555 "} '\
       http://127.0.0.1:5000/transitions
 
 ## Considerations
