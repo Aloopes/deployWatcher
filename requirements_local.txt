@@ -1,0 +1,22 @@
+# app requirements
+<<<<<<< HEAD
+Flask
+Flask-RESTful
+Flask-SQLAlchemy
+python-dotenv
+
+# testing requirements
+pytest
+pytest-flask
+pytest-flask-sqlalchemy
+=======
+Flask~=1.1.2
+Flask-RESTful~=0.3.8
+Flask-SQLAlchemy~=2.4.3
+python-dotenv~=0.13.0
+
+# testing requirements
+pytest~=6.2.5
+pytest-flask~=1.0.0
+pytest-flask-sqlalchemy~=1.0.2
+>>>>>>> efaef465f656354e52b9b2aa50fecd59db5c42ac

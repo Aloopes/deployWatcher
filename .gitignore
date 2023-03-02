@@ -1,0 +1,9 @@
+/venv/
+/.idea/
+/.pytest_cache
+**/__pycache__/
+.tool-versions
+<<<<<<< HEAD
+.vscode/
+=======
+>>>>>>> efaef465f656354e52b9b2aa50fecd59db5c42ac

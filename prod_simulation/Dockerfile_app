@@ -1,0 +1,19 @@
+FROM python:3.8
+
+ENV APP /deployWatcher
+
+RUN mkdir $APP
+WORKDIR $APP
+
+EXPOSE 5000
+
+COPY prod_simulation/requirements_prod.txt /$APP/requirements.txt
+
+RUN pip install -r requirements.txt
+
+COPY deployWatcher $APP
+
+COPY prod_simulation/uwsgi.conf /var/conf/uwsgi.conf
+
+CMD [ "uwsgi", "--ini", "/var/conf/uwsgi.conf" ]
+

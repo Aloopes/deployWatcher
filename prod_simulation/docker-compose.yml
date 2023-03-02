@@ -1,0 +1,29 @@
+version: '3'
+services:
+  flask:
+    image: deploywatcher-prod
+    env_file:
+      - .prod.env
+    build:
+      context: ..
+      dockerfile: prod_simulation/Dockerfile_app
+    volumes:
+      - "./deployWatcher:/app"
+  nginx:
+    image: nginx-server
+    build:
+      context: .
+      dockerfile: Dockerfile_nginx
+    ports:
+      - 5000:80
+    depends_on:
+      - flask
+  db:
+    image: mysql:5.7
+    ports:
+      - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db_scripts:/docker-entrypoint-initdb.d
+      - ./DB:/var/lib/mysql

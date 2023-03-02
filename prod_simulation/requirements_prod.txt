@@ -1,0 +1,7 @@
+# app requirements
+Flask~=1.1.2
+Flask-RESTful~=0.3.8
+Flask-SQLAlchemy~=2.4.3
+python-dotenv~=0.13.0
+uWSGI==2.0.17.1
+mysql-connector-python~=8.0.20
