@@ -31,8 +31,15 @@ class Transitions(Resource):
 
         return None
 
-    def get(self):
-        return {'Status': 'GET for transitions Successful.'}, 200 
+    def get(self, transition_id=None):
+        if transition_id:
+            transition = TransitionModel.query.get(transition_id)
+            if transition:
+                return transition.json(), 200
+            else:
+                return {'message': 'Transition not found'}, 404
+        return {'Status': 'HEALTH OK'}, 200
+
 
     def post(self):
         payload = Transitions.parser.parse_args()

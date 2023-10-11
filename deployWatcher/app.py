@@ -1,6 +1,7 @@
 import os
 import sys
 import inspect
+
 # Setting up the parent directory for prod imports
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -12,10 +13,8 @@ from typing import Dict
 from flask import Flask
 from flask_restful import Api
 
-
 def add_resources(api_var: Api):
-    api_var.add_resource(rsc.Transitions, '/transitions')
-
+    api_var.add_resource(rsc.Transitions, '/transitions', '/transitions/<int:transition_id>')
 
 def create_app(config_dict: Dict = None) -> Flask:
     created_app = Flask(__name__)
@@ -40,7 +39,6 @@ def create_app(config_dict: Dict = None) -> Flask:
             db.session.commit()
 
     return created_app
-
 
 if __name__ == '__main__':
     app = create_app()

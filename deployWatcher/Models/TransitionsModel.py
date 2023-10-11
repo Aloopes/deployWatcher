@@ -38,3 +38,14 @@ class TransitionModel(db.Model):
         except:
             db.session.rollback()
             raise
+    
+    def json(self):
+        return {
+            'id': self.id,
+            'component': self.component,
+            'version': self.version,
+            'author': self.author,
+            'status': self.status,
+            'sent_timestamp': self.sent_timestamp.strftime('%Y-%m-%d %H:%M:%S.%f'),
+            'received_timestamp': self.received_timestamp.strftime('%Y-%m-%d %H:%M:%S.%f')
+        }
