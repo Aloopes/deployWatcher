@@ -17,9 +17,6 @@ from flask_restful import Api
 
 def add_resources(api_var: Api):
     api_var.add_resource(rsc.Transitions, '/transitions')
-<<<<<<< HEAD
-    # api_var.add_resource(rsc.Health, '/health')
-
 
 def create_app(config_filename: Dict = None) -> Flask:
     created_app = Flask(__name__)
@@ -29,7 +26,7 @@ def create_app(config_filename: Dict = None) -> Flask:
 
     if config_filename is not None:
         created_app.config.from_mapping(config_filename)
-    else:  # default config
+    else: 
         created_app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
         created_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         created_app.config['PROPAGATE_EXCEPTIONS'] = True
@@ -44,9 +41,6 @@ def create_app(config_filename: Dict = None) -> Flask:
             db.session.commit()
 
     return created_app
-=======
-    api_var.add_resource(rsc.Health, '/health')
->>>>>>> efaef465f656354e52b9b2aa50fecd59db5c42ac
 
 
 def create_app(config_filename: Dict = None) -> Flask:
@@ -76,9 +70,5 @@ def create_app(config_filename: Dict = None) -> Flask:
 app = create_app()
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     app = create_app()
-    app.run(host='127.0.0.1')
-=======
     app.run(host='0.0.0.0')
->>>>>>> efaef465f656354e52b9b2aa50fecd59db5c42ac
