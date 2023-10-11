@@ -41,11 +41,7 @@ def session(db, request):
     transaction = connection.begin()
 
     options = dict(bind=connection, binds={})
-<<<<<<< HEAD
-    session = db._make_scoped_session(options=options)
-=======
     session = db.create_scoped_session(options=options)
->>>>>>> efaef465f656354e52b9b2aa50fecd59db5c42ac
 
     db.session = session
 
