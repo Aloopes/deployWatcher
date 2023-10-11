@@ -1,16 +1,16 @@
 import os
 import sys
 import inspect
+# Setting up the parent directory for prod imports
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+
 import deployWatcher.Resources as rsc
 from deployWatcher.database import db
 from typing import Dict
 from flask import Flask
 from flask_restful import Api
-
-# Setting up the parent directory for imports
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0, parentdir)
 
 
 def add_resources(api_var: Api):
