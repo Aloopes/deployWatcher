@@ -12,7 +12,7 @@ To run locally on your computer, ensure the following requirements are installed
 2. Packages listed in `requirements_local.txt` with the command `pip install -r requirements_local.txt`
 3. Git (to clone the repository). Alternatively, download the .zip from the repository and extract it.
 
-With these requirements met, open your command line and execute the following:
+Execute the following steps:
 
 #### Windows cmd / Powershell:
 
@@ -34,10 +34,10 @@ flask run
 
 #### Dev
 
-To deploy in development mode:
+For deployment in development mode:
 
 1. Ensure Python 3.6+, Docker, and Git are installed.
-2. Open a command prompt:
+2. Run:
 
 ```bash
 git clone https://github.com/akelopes/deployWatcher.git
@@ -48,7 +48,7 @@ docker run -d -p 5000:5000 deploywatcher
 
 #### Prod
 
-A demonstration environment for production integrates the app with an http host (nginx + uwsgi) and a MySQL database via Docker.
+A demo environment for production with the app, http host (nginx + uwsgi), and MySQL database via Docker.
 
 Prerequisites:
 
@@ -56,7 +56,7 @@ Prerequisites:
 2. Docker-compose or Docker-Stack
 3. Git (or download the .zip from the repository).
 
-Execute the following:
+Run:
 
 ```bash
 git clone https://github.com/akelopes/deployWatcher.git
@@ -65,20 +65,24 @@ docker-compose build
 docker-compose up
 ```
 
-#### Use
+### Usage
 
-To verify successful execution, visit: `https://127.0.0.1:5000/transitions`. The message "API: OK" should appear.
+To verify successful execution, open `https://127.0.0.1:5000/transitions`. You should see "API: OK".
 
-* Commands:
-    * **GET**: Returns JSON with message `{"API": "OK"}`.
-    * **POST**: Inserts a deployment status into the database. Accepts a JSON body with:
-        * `component`: String (Max 140 characters)
-        * `version`: String (e.g., "1.0")
-        * `author`: String
-        * `status`: String
-        * `sent_timestamp`: Optional. Format: "yyyy-mm-dd hh:mm:ss.fff". If omitted, the current time is used.
+#### Transitions Resource
 
-Example using curl:
+* **GET**:
+    - **`/transitions`**: Returns a message `{"API": "OK"}`.
+    - **`/transitions/<id>`**: Retrieves details of a specific transition by its ID. If it doesn't exist, you'll get a `404 Not Found` status with `{"message": "Transition not found"}`.
+      
+* **POST** (`/transitions`): Inserts a new deployment status into the database and returns the ID of the record. Accepts a JSON body with:
+    - `component`: String (Max 140 characters)
+    - `version`: String (e.g., "1.0")
+    - `author`: String
+    - `status`: String
+    - `sent_timestamp`: Optional. Format: "yyyy-mm-dd hh:mm:ss.fff". Defaults to the current time if omitted.
+
+Use curl for an example POST request:
 
 ```bash
 curl --header "Content-Type: application/json" \
@@ -87,15 +91,11 @@ curl --header "Content-Type: application/json" \
      http://127.0.0.1:5000/transitions
 ```
 
-Errors like "Invalid date format", "Component too big", or database-related issues will return with appropriate error messages.
+Errors, such as "Invalid date format" or "Component too big", return with appropriate messages.
 
 ## Considerations
 
-* The core system is designed to be agnostic to cloud providers and databases, ensuring flexibility.
-* The RESTful standard is adhered to.
-* Input handling is performed by the original system for flexibility in data translation.
-* Local and Dev environments prioritize easy development over data persistence.
-
----
-
-This revised documentation should address the issues previously mentioned and provide users with a clearer understanding of the application's functionality and constraints.
+* The system is designed to be agnostic to cloud providers and databases.
+* Adherence to the RESTful standard.
+* Input handling is performed by the original system for flexible data translation.
+* Local and Dev environments are for development, not persistent data.
