@@ -13,15 +13,28 @@ class TransitionModel(db.Model):
     received_timestamp = db.Column(db.DateTime)
 
     def __init__(self, component: str, version: str, author: str, status: str,
-                 sent_timestamp: str = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')):
+                 sent_timestamp: str = None):
         self.component = component
         self.version = version
         self.author = author
         self.status = status
+        if sent_timestamp is None:
+            sent_timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')
         self.sent_timestamp = datetime.strptime(sent_timestamp, '%Y-%m-%d %H:%M:%S.%f')
         self.received_timestamp = datetime.utcnow()
 
-
     def save(self):
-        db.session.add(self)
-        db.session.commit()
+        try:
+            db.session.add(self)
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise  # re-raise the last exception
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except:
+            db.session.rollback()
+            raise

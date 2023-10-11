@@ -1,99 +1,101 @@
-OBS: Para versão em portugues, [clique aqui](README_ptBR.md)
-
 # Deploy Watcher
 
-Flask RESTFul API that can be integrated into your deployment pipeline to track deployment times.
+Flask RESTful API that can be integrated into your deployment pipeline to track deployment times.
 
 ## Installation
 
 ### Local
-To run locally on your computer, you must have the following requirements installed:
-1. Python version 3.6+
-2. Packages listed in requirements_local.txt with the command `pip install -r requirements_local.txt`
-3. Git, just to clone the repository. Alternatively, you can download the .zip from that repository and extract it,
-ignoring the first command in the instructions below.
 
-If these requirements are met, open your command line and perform the following commands:
-#### Windows cmd / Powershell
-    git clone https://github.com/akelopes/deployWatcher.git
-    cd deployWatcher
-    flask run
-    
-#### Linux shell
-    git clone https://github.com/akelopes/deployWatcher.git
-    cd deployWatcher
-    flask run
+To run locally on your computer, ensure the following requirements are installed:
+
+1. Python version 3.6+
+2. Packages listed in `requirements_local.txt` with the command `pip install -r requirements_local.txt`
+3. Git (to clone the repository). Alternatively, download the .zip from the repository and extract it.
+
+With these requirements met, open your command line and execute the following:
+
+#### Windows cmd / Powershell:
+
+```bash
+git clone https://github.com/akelopes/deployWatcher.git
+cd deployWatcher
+flask run
+```
+
+#### Linux shell:
+
+```bash
+git clone https://github.com/akelopes/deployWatcher.git
+cd deployWatcher
+flask run
+```
 
 ### Docker
+
 #### Dev
-To deploy the app in development mode, you will first need to have the following requirements installed in your
-computer:
-1. Python 3.6+
-2. Docker
-3. Git, just to clone the repository. Alternatively, you can download the .zip from that repository and extract it,
-ignoring the first command in the instructions below.
 
-With these requirements installed and functional on your computer, simply open a command prompt and run the following
-commands:
+To deploy in development mode:
 
-    git clone https://github.com/akelopes/deployWatcher.git
-    cd deployWatcher
-    docker build. -t deploywatcher
-    docker run -d -p 5000:5000 deploywatcher
+1. Ensure Python 3.6+, Docker, and Git are installed.
+2. Open a command prompt:
+
+```bash
+git clone https://github.com/akelopes/deployWatcher.git
+cd deployWatcher
+docker build . -t deploywatcher
+docker run -d -p 5000:5000 deploywatcher
+```
 
 #### Prod
-A simulation environment was created for production, where the application is integrated with an http host (nginx + 
-uwsgi) and a MySQL database via docker.
 
-Some considerations to be made: as it is intended only as a demonstration of the application's flexibility in any 
-environment, no layers of security or scalability were added, but they must be applied when deploying to a real 
-production environment.
+A demonstration environment for production integrates the app with an http host (nginx + uwsgi) and a MySQL database via Docker.
 
-Prerequisites for installing this environment:
-1. Docker (linux host)
+Prerequisites:
+
+1. Docker (Linux host preferred)
 2. Docker-compose or Docker-Stack
-3. Git, just to clone the repository. Alternatively, you can download the .zip from that repository and extract it,
-ignoring the first command in the instructions below.
+3. Git (or download the .zip from the repository).
 
-Having these requirements installed, open a command prompt for your operating system and run the following commands:
-NOTE: replace the `docker-compose` commands with `docker stack deploy --compose-file docker-compose.yml`
+Execute the following:
 
-    git clone https://github.com/akelopes/deployWatcher.git
-    cd deployWatcher/prod_simulation
-    docker-compose build
-    docker-compose up
-
+```bash
+git clone https://github.com/akelopes/deployWatcher.git
+cd deployWatcher/prod_simulation
+docker-compose build
+docker-compose up
+```
 
 #### Use
-To confirm that the execution was successful, access your browser at https://127.0.0.1:5000/transitions. A
-message indicating API: OK should appear on the screen, as in the example below:
 
-![](assets/img_api_ok.png)
+To verify successful execution, visit: `https://127.0.0.1:5000/transitions`. The message "API: OK" should appear.
 
-* Commands
-    * GET: returns JSON with message {"API": "OK"}
-    * POST: inserts a deployment status into the database. Returns message stating that the insertion was successful 
-    and the id of the insertion. Accepts JSON body, containing parameters:
-        * component: String => Contains the name of the component being registered
-        * version: Decimal(2,1) => Indicates the version of the component that is deploying.
-        * author: String => Indicates the person responsible for deploying the component.
-        * status: String => Indicates the status of the deployment transition being logged.
-        * sent_timestamp: String => Optional parameter in "yyyy-mm-dd hh: mm: ss.fff" format which is converted to 
-        datetime for insertion into the database.
-        
-Example of a post command using the curl tool:
+* Commands:
+    * **GET**: Returns JSON with message `{"API": "OK"}`.
+    * **POST**: Inserts a deployment status into the database. Accepts a JSON body with:
+        * `component`: String (Max 140 characters)
+        * `version`: String (e.g., "1.0")
+        * `author`: String
+        * `status`: String
+        * `sent_timestamp`: Optional. Format: "yyyy-mm-dd hh:mm:ss.fff". If omitted, the current time is used.
 
-    curl --header "Content-Type: application / json" \
-      --request POST \
-      --data '{"component": "testApp", "version": 1.0, "author": "akelopes", "status": "started", "sent_timestamp": "2020-01-01 10: 10: 50.555 "} '\
-      http://127.0.0.1:5000/transitions
+Example using curl:
+
+```bash
+curl --header "Content-Type: application/json" \
+     --request POST \
+     --data '{"component": "testApp", "version": "1.0", "author": "akelopes", "status": "started", "sent_timestamp": "2020-01-01 10:10:50.555"}' \
+     http://127.0.0.1:5000/transitions
+```
+
+Errors like "Invalid date format", "Component too big", or database-related issues will return with appropriate error messages.
 
 ## Considerations
-The following assumptions are considered for the execution and development of this software:
-* The core system must remain agnostic to cloud providers and databases, thus allowing flexibility in
-their integration.
-* The RESTful Standard will be respected.
-* The inputs will be handled by the original system. This is assumed so that there is flexibility in
-translation of the data to the API.
-* The Local and Dev environments do not take data persistence into account, and were created only to provide a
-easy development environment.
+
+* The core system is designed to be agnostic to cloud providers and databases, ensuring flexibility.
+* The RESTful standard is adhered to.
+* Input handling is performed by the original system for flexibility in data translation.
+* Local and Dev environments prioritize easy development over data persistence.
+
+---
+
+This revised documentation should address the issues previously mentioned and provide users with a clearer understanding of the application's functionality and constraints.
